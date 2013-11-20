@@ -73,7 +73,7 @@ var convert = new UglifyJS.TreeTransformer(null, function(node){
       //control localisation -- LOCALE
       if (node.expression.end.value === "getString" &&
           node.expression.expression.property === "Locale") {
-        return functionCall("L", node.args);
+        return functionCall("LL", node.args);
       }
 
       //control localisation -- UI
@@ -126,7 +126,7 @@ var convert = new UglifyJS.TreeTransformer(null, function(node){
   } else if (node instanceof UglifyJS.AST_Assign && !doNotTouch(node.right)){
     if (node.left.property && node.left.property.match && node.left.property.match("^(title|text)id$")) {
       node.left.property = node.left.property.replace("id","");
-      node.right = functionCall("L", [node.right]);
+      node.right = functionCall("LL", [node.right]);
       return node;
     } else if (couldBeAsset(node.left.property)) {
       node.right.value = toFullPath(node.right.value);
